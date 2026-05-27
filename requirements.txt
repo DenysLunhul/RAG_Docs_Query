@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+pgvector
+pypdf
+boto3
+pydantic
+pydantic-settings
+psycopg2-binary
+python-multipart
