@@ -9,7 +9,7 @@ from sqlalchemy import (
 )
 
 
-class Document_Chunk(Base):
+class DocumentChunk(Base):
     __tablename__ = "document_chunks"
     id = Column(Integer, primary_key=True)
     filename = Column(String)
