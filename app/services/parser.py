@@ -1,9 +1,10 @@
+import io
 import pypdf
 from app.config import settings
 
-def extract_text(filename: str):
+def extract_text(file_bytes: bytes) -> list[str]:
     """Extract text chunks from PDF"""
-    reader = pypdf.PdfReader(filename)
+    reader = pypdf.PdfReader(io.BytesIO(file_bytes))
     chunks = []
     chunk = ""
     next_chunk = ""
