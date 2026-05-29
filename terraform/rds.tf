@@ -1,4 +1,5 @@
 resource "aws_db_instance" "knowledge_base" {
+  db_name = "knowledge_base"
   identifier        = "database-1"
   instance_class    = "db.t3.micro"
   engine            = "postgres"
