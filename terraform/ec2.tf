@@ -56,3 +56,16 @@ EOF
     Name = "knowledge-base-server"
   }
 }
+
+resource "aws_eip" "knowledge_base" {
+  instance = aws_instance.knowledge_base.id
+  domain   = "vpc"
+
+  tags = {
+    Name = "knowledge-base-eip"
+  }
+}
+
+output "ec2_public_ip" {
+  value = aws_eip.knowledge_base.public_ip
+}

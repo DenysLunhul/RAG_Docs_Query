@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knowledge Base</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <h1>Knowledge Base</h1>
+  <p class="subtitle">Upload PDFs, ask questions, get answers with citations.</p>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>Upload Document</h2>
+      <div class="drop-zone" id="drop-zone">
+        <p>Drag & drop a PDF here or <span>click to browse</span></p>
+        <input type="file" id="file-input" accept=".pdf" />
+      </div>
+      <div class="progress-bar" id="progress-bar">
+        <div class="progress-bar-fill"></div>
+      </div>
+      <div class="upload-status info" id="upload-status"></div>
+    </div>
+
+    <div class="card">
+      <h2>Ask a Question</h2>
+      <div class="query-row">
+        <input type="text" id="query-input" placeholder="Ask anything about your documents..." />
+        <button id="query-btn" onclick="submitQuery()">Ask</button>
+      </div>
+      <div class="answer-box" id="answer-box"></div>
+    </div>
+
+    <div class="card">
+      <h2>Your Documents</h2>
+      <div class="file-list" id="file-list">
+        <div class="empty-state">Loading...</div>
+      </div>
+    </div>
+
+    <div class="card" id="viewer-card" style="display:none;">
+      <h2 id="viewer-title">Viewing</h2>
+      <iframe id="pdf-viewer"></iframe>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
