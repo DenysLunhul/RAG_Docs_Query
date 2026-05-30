@@ -4,6 +4,7 @@ from app.models.chunks import DocumentChunk
 from app.config import settings
 import boto3
 import json
+from app.services.reranker import rerank
 
 bedrock = boto3.client("bedrock-runtime", region_name="us-east-1")
 
@@ -12,8 +13,9 @@ def retrieve_chunks(question: str, db: Session) -> list:
     question_vector = get_embedding(question)
     chunks = db.query(DocumentChunk).order_by(
         DocumentChunk.embedding.cosine_distance(question_vector)
-    ).limit(5).all()
-    return chunks
+    ).limit(20).all()
+    top_5_chunks = rerank(question, chunks)
+    return top_5_chunks
 
 
 def generate_answer(question: str, chunks: list) -> str:

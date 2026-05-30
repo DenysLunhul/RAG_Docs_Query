@@ -15,6 +15,10 @@ resource "aws_db_instance" "knowledge_base" {
   max_allocated_storage        = 1000
   performance_insights_enabled = true
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   vpc_security_group_ids = [
     data.aws_security_group.rds_ec2.id
   ]

@@ -35,6 +35,11 @@ resource "aws_iam_role_policy" "ec2_policy" {
         Effect = "Allow"
         Action = ["ecr:*"]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = ["sagemaker:InvokeEndpoint"]
+        Resource = "*"
       }
     ]
   })
