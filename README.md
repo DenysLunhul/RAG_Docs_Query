@@ -12,7 +12,7 @@ Upload any PDF → the system extracts text, splits it into chunks, embeds them 
 Upload PDF
   → S3 (raw file storage)
   → pypdf (text extraction)
-  → chunking (500 words, 50 word overlap)
+  → chunking (200 words, 20 word overlap)
   → Amazon Titan via Bedrock (embeddings)
   → RDS PostgreSQL + pgvector (vector storage)
 
@@ -114,19 +114,24 @@ knowledge_base/
 ## Deploy from Scratch
 
 ```bash
-# 1. Build and push Docker image
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 287528889753.dkr.ecr.us-east-1.amazonaws.com
-docker build -t knowledge-base .
-docker tag knowledge-base:latest 287528889753.dkr.ecr.us-east-1.amazonaws.com/knowledge-base:latest
-docker push 287528889753.dkr.ecr.us-east-1.amazonaws.com/knowledge-base:latest
+# 1. Create SageMaker reranker endpoint manually in AWS Console
+# Model: cross-encoder/ms-marco-MiniLM-L-6-v2 (HuggingFace)
+# Instance: ml.m4.xlarge
+# Endpoint name: knowledge-base-reranker
 
-# 2. Provision infrastructure
+# 2. Build and push Docker image
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
+docker build -t knowledge-base .
+docker tag knowledge-base:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/knowledge-base:latest
+docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/knowledge-base:latest
+
+# 3. Provision infrastructure
 cd terraform
 terraform init
 terraform apply
-# wait ~10 min for EC2 user_data to complete
+# wait ~15 min for RDS + EC2 user_data to complete
 
-# 3. Open the app
+# 4. Open the app
 # http://<ec2_public_ip>:8000
 ```
 

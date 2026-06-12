@@ -9,3 +9,5 @@ terraform/terraform.tfstate.backup
 terraform/terraform.tfvars
 
 PROJECT_SUMMARY.md
+
+lambda/*.zip

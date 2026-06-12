@@ -15,4 +15,4 @@ class DocumentChunk(Base):
     filename = Column(String)
     chunk_text = Column(String)
     embedding = Column(Vector(1536))
-    created_at = Column(DateTime, default=datetime.datetime.utcnow())
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
