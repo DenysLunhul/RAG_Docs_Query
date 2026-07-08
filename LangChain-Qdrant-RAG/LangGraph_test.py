@@ -100,12 +100,11 @@ app = graph.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "1"}}
 
-
-while True:
-    question = input("Enter question or Enter to end session: ")
-    if not question:
-        break
-    result = app.invoke({"messages": [{"role": "user", "content": question}]}, config=config)
-    print(result["answer"])
-    print("-" * 50)
-
+if __name__ == "__main__":
+    while True:
+        question = input("Enter question or Enter to end session: ")
+        if not question:
+            break
+        result = app.invoke({"messages": [{"role": "user", "content": question}]}, config=config)
+        print(result["answer"])
+        print("-" * 50)
