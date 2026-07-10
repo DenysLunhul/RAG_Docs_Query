@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ed5f1d2f-c85b-425d-b190-0540fa0d63ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangGraph_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangGraph_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangChain_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints/LangChain_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangChain_test_pipes.py" beforeDir="false" afterPath="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints/LangChain_test_pipes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangGraph_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints/LangGraph_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LangChain-Qdrant-RAG/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/LangChain-Qdrant-RAG/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="67" />
+    <option name="cachedIndexableFilesCount" value="66" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -43,28 +46,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.LangChain_test.executor": "Run",
-    "Python.LangGraph_test.executor": "Run",
-    "Python.embeddings.executor": "Run",
-    "Python.init_db.executor": "Run",
-    "Python.test_bedrock.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/denys/PycharmProjects/Hands-On_ML",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.LangChain_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.LangGraph_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.embeddings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.init_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_bedrock.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/denys/PycharmProjects/Hands-On_ML&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints" />
     </key>
   </component>
   <component name="RunManager" selected="Python.LangChain_test">
@@ -84,7 +90,7 @@
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangChain_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints/LangChain_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -109,7 +115,7 @@
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangChain_test_pipes.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints/LangChain_test_pipes.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -134,7 +140,7 @@
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LangChain-Qdrant-RAG/LangGraph_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LangChain-Qdrant-RAG/temp_blueprints/LangGraph_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -245,7 +251,8 @@
       <workItem from="1783430425585" duration="1366000" />
       <workItem from="1783449108175" duration="6000" />
       <workItem from="1783453429816" duration="288000" />
-      <workItem from="1783498003507" duration="3911000" />
+      <workItem from="1783498003507" duration="3981000" />
+      <workItem from="1783704093839" duration="681000" />
     </task>
     <servers />
   </component>
