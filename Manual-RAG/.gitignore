@@ -9,5 +9,5 @@ terraform/terraform.tfstate.backup
 terraform/terraform.tfvars
 
 PROJECT_SUMMARY.md
-
+CLAUDE.md
 lambda/*.zip
