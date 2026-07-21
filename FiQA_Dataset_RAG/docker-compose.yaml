@@ -17,6 +17,13 @@ services:
       - ~/.aws:/root/.aws:ro
     depends_on:
       - qdrant
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
 volumes:
   qdrant_storage:

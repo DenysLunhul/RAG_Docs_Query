@@ -1,10 +1,11 @@
 import json
 import uuid
 from itertools import islice
-from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient, models
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
+from fastembed import SparseTextEmbedding
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 COLLECTION_NAME = "fiqa_local"
@@ -15,6 +16,8 @@ CHUNK_OVERLAP = 50
 
 
 model = SentenceTransformer("BAAI/bge-base-en-v1.5", device="cuda")
+sparse_model = SparseTextEmbedding(model_name="Qdrant/bm25")
+
 VECTOR_SIZE = model.encode("test").shape[0]
 
 splitter = RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
@@ -37,7 +40,8 @@ if __name__ == "__main__":
 
     qdrant.create_collection(
         collection_name=COLLECTION_NAME,
-        vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
+        vectors_config={"dense": models.VectorParams(size=VECTOR_SIZE, distance=models.Distance.COSINE)},
+        sparse_vectors_config={"sparse": models.SparseVectorParams(modifier=models.Modifier.IDF)},
     )
     qdrant.create_payload_index(collection_name=COLLECTION_NAME, field_name="doc_id", field_schema="keyword")
 
@@ -70,12 +74,19 @@ if __name__ == "__main__":
                 continue
 
             texts = [r["text_to_embed"] for r in records]
-            vectors = model.encode(texts, batch_size=BATCH_SIZE, device="cuda").tolist()
+            dense_vectors = model.encode(texts, batch_size=BATCH_SIZE, device="cuda").tolist()
+            sparse_vectors = list(sparse_model.embed(texts))
 
             points = [
                 PointStruct(
                     id=str(uuid.uuid4()),
-                    vector=vector,
+                    vector={
+                        "dense": dense_vector,
+                        "sparse": models.SparseVector(
+                            indices=sparse_vector.indices.tolist(),
+                            values=sparse_vector.values.tolist(),
+                        )
+                    },
                     payload={
                         "doc_id": r["doc_id"],
                         "chunk_index": r["chunk_index"],
@@ -83,7 +94,7 @@ if __name__ == "__main__":
                         "text": r["text"],
                     },
                 )
-                for r, vector in zip(records, vectors)
+                for r, dense_vector, sparse_vector in zip(records, dense_vectors, sparse_vectors)
             ]
 
             qdrant.upsert(collection_name=COLLECTION_NAME, points=points)
