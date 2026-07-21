@@ -1,17 +1,24 @@
 import json
+import uuid
 from itertools import islice
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 COLLECTION_NAME = "fiqa_local"
 CORPUS_PATH = "datasets/fiqa/corpus.jsonl"
-VECTOR_SIZE = 384
 BATCH_SIZE = 512
+CHUNK_SIZE = 256
+CHUNK_OVERLAP = 50
 
-model = SentenceTransformer("BAAI/bge-small-en-v1.5", device="cuda")
 
+model = SentenceTransformer("BAAI/bge-base-en-v1.5", device="cuda")
+VECTOR_SIZE = model.encode("test").shape[0]
+
+splitter = RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
+    model.tokenizer, chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
 
 def chunked(iterable, size):
     it = iter(iterable)
@@ -32,34 +39,51 @@ if __name__ == "__main__":
         collection_name=COLLECTION_NAME,
         vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
     )
+    qdrant.create_payload_index(collection_name=COLLECTION_NAME, field_name="doc_id", field_schema="keyword")
+
+
 
     with open(CORPUS_PATH, "r", encoding="utf-8") as f:
         docs = (json.loads(line) for line in f)
 
         for batch in tqdm(chunked(docs, BATCH_SIZE)):
-            texts = []
-            valid_docs = []
+
+            records = []
+
             for doc in batch:
                 title = doc.get("title", "")
-                text = doc["text"]
-                text_to_embed = f"{title} {text}".strip() if title else text
-                if not text_to_embed:
-                    continue
-                texts.append(text_to_embed)
-                valid_docs.append(doc)
+                doc_id = doc["_id"]
 
-            if not texts:
+                for chunk_index, chunk_text in enumerate(splitter.split_text(doc["text"])):
+                    text_to_embed = f"{title} {chunk_text}".strip() if title else chunk_text
+                    if not text_to_embed:
+                        continue
+                    records.append({
+                        "doc_id": doc_id,
+                        "chunk_index": chunk_index,
+                        "title": title,
+                        "text": chunk_text,
+                        "text_to_embed": text_to_embed,
+                    })
+
+            if not records:
                 continue
 
+            texts = [r["text_to_embed"] for r in records]
             vectors = model.encode(texts, batch_size=BATCH_SIZE, device="cuda").tolist()
 
             points = [
                 PointStruct(
-                    id=int(doc["_id"]),
+                    id=str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{r['doc_id']}_{r['chunk_index']}")),
                     vector=vector,
-                    payload={"doc_id": doc["_id"], "title": doc.get("title", ""), "text": doc["text"]},
+                    payload={
+                        "doc_id": r["doc_id"],
+                        "chunk_index": r["chunk_index"],
+                        "title": r["title"],
+                        "text": r["text"],
+                    },
                 )
-                for doc, vector in zip(valid_docs, vectors)
+                for r, vector in zip(records, vectors)
             ]
 
             qdrant.upsert(collection_name=COLLECTION_NAME, points=points)
