@@ -15,7 +15,7 @@ class RetrieveRequest(BaseModel):
     top_k: int
 
 
-model = SentenceTransformer("BAAI/bge-small-en-v1.5", device="cpu")
+model = SentenceTransformer("BAAI/bge-base-en-v1.5", device="cpu")
 QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
