@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
             points = [
                 PointStruct(
-                    id=str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{r['doc_id']}_{r['chunk_index']}")),
+                    id=str(uuid.uuid4()),
                     vector=vector,
                     payload={
                         "doc_id": r["doc_id"],

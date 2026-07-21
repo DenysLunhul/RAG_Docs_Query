@@ -27,15 +27,17 @@ def get_embedding(text: str) -> list[float]:
 def retrieve_docs(request: RetrieveRequest):
     vector = get_embedding(request.query)
 
-    hits = qdrant.query_points(
+    groups = qdrant.query_points_groups(
         collection_name=COLLECTION_NAME,
         query=vector,
+        group_by="doc_id",
         limit=request.top_k,
-    ).points
+        group_size=1,
+    ).groups
 
     return {
         "results": [
-            {"id": hit.payload["doc_id"], "score": hit.score}
-            for hit in hits
+            {"id": g.id, "score": g.hits[0].score}
+            for g in groups
         ]
     }
