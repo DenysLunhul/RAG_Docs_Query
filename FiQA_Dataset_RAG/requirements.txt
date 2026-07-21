@@ -2,3 +2,7 @@ fastapi
 uvicorn[standard]
 qdrant-client
 sentence-transformers
+fastembed
+langchain-text-splitters
+requests
+tqdm
