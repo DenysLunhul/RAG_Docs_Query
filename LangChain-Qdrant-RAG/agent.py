@@ -78,8 +78,9 @@ class GroundingCheckMiddleware(AgentMiddleware):
         return {
             "messages": [
                 AIMessage(
-                    content="Note: I could not fully verify the answer above against "
-                    "the retrieved document passages — treat it with caution."
+                    content="Note: I could not fully verify the following answer against "
+                    "the retrieved document passages — treat it with caution.\n\n"
+                    + final_answer
                 )
             ]
         }
