@@ -27,3 +27,15 @@ A retrieval pipeline benchmarked against **FiQA-2018** (BEIR), a financial-domai
 Hybrid search and reranking are implemented and toggleable per-request, but measured (against the full BEIR test set) to underperform plain dense retrieval on this dataset — the default configuration reflects that finding.
 
 Full pipeline details, API, evaluation results, and run instructions: [`FiQA_Dataset_RAG/README.md`](FiQA_Dataset_RAG/README.md).
+
+---
+
+## [LangChain-Qdrant-RAG](LangChain-Qdrant-RAG/)
+
+An agentic RAG over user-uploaded PDFs, built on **LangChain** (`create_agent`) and **LangGraph** — a learning project to practice the current LangChain/LangGraph agent stack, as opposed to the hand-rolled pipelines above.
+
+**Pipeline:** PDF upload → chunking (`RecursiveCharacterTextSplitter`) → dense (`BAAI/bge-base-en-v1.5`) + sparse (BM25 via `fastembed`) embeddings → Qdrant. A question is answered by a ReAct agent (`create_agent`) that calls a `retrieve` tool (hybrid search + optional reranking, toggleable per request) and is capped/summarized/groundedness-checked by middleware (`ToolCallLimitMiddleware`, `SummarizationMiddleware`, a custom `GroundingCheckMiddleware`) before Claude (Bedrock) answers.
+
+**Stack:** FastAPI, LangChain `create_agent` + LangGraph checkpointer, Qdrant (hybrid dense+sparse), `sentence-transformers`, `fastembed`, Claude Haiku via Bedrock, Docker Compose with GPU passthrough.
+
+Full details, API endpoints, and run instructions: [`LangChain-Qdrant-RAG/README.md`](LangChain-Qdrant-RAG/README.md).
